@@ -43,6 +43,7 @@ Toolchain
 
 D02 Hacking
 UEFI">
+<meta property="og:image" content="/img/hardware.png">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo">
 <meta name="twitter:description" content="Hisilicon Opensource Board D02 hacking manual
@@ -112,7 +113,7 @@ UEFI">
         <section id="main"><article id="post-D02_1" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/02/11/D02_1/" class="article-date">
-  <time datetime="2015-02-11T03:57:13.000Z" itemprop="datePublished">Feb 11 2015</time>
+  <time datetime="2015-02-11T11:49:42.000Z" itemprop="datePublished">Feb 11 2015</time>
 </a>
     
   </div>
@@ -121,7 +122,7 @@ UEFI">
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Hisilicon_Opensource_Board_D02_hacking_manual">Hisilicon Opensource Board D02 hacking manual</h1>
+        <h2 id="Hisilicon_Opensource_Board_D02_hacking_manual">Hisilicon Opensource Board D02 hacking manual</h2>
 <h2 id="Overview">Overview</h2>
 <ul>
 <li>D02 Board Hardwawre Feature<ul>
@@ -148,20 +149,63 @@ UEFI">
 </li>
 </ul>
 <h2 id="D02_Board_Hardware_Features">D02 Board Hardware Features</h2>
-<p>Major hardware features of D02 are listed as follow:</p>
-<p>+————————————+——————————————————————+<br>|Features                |Description                             |<br>+————————————+——————————————————————+<br>|Board                 | SSI-EEB/E-ATX Compatible               |<br>+————————————+——————————————————————+<br>|Processors              | 16xARM Cortex-A57@max 2.1GHz               |<br>|                 | Support ARMv8-A instruction set            |<br>+————————————+——————————————————————+<br>|Memory                  | 2x Memory channel 4x DDR3 DIMM             |<br>|                        | 2x SPI Flash 158Mb BIOS/UEFI               |<br>|                        | 1Gb NorFlash                               |<br>+————————————+——————————————————————+<br>|Peripheral interfaces   | 1x USB2.0 host port                        |<br>|                        | 1x UART interface                          |<br>|                        | 8x SAS3.0                                  |<br>|                        | 1X ARM Tracer connector                    |<br>|                        | 1x JTAG interface                          |<br>+————————————+——————————————————————+<br>|Expansion Capabilities  | 2 8x PCI express interfaces                |<br>+————————————+——————————————————————+<br>|LAN                     | 2x10/100/1000Mbit/s Gigabit Ethernet ports |<br>|             | 2x XGE SEP+                                |<br>+————————————+——————————————————————+<br>|Other                   | RTC battery                                |<br>+————————————+——————————————————————+</p>
+<p>Major hardware features of D02 are listed as follow:<br>    <img src="/img/hardware.png" alt=""></p>
 <h3 id="The_Architecture_of_D02">The Architecture of D02</h3>
-<p>The software architecture on D02 is consistented of UEFI,GRUB,Kernel,Distribution and Toolchain.The architecture of D02 is as follow:<br>    +———————————-++———+<br>    | NANDRootfs  ubuntu    ||  T   |<br>    | OpenSuse Debian Fedora||  o   |<br>    +———————————-+|  o   |<br>    |        Kernel         ||  l   |<br>    +————+              ||  c   |<br>    |  GRUB  |              ||  h   |<br>    +————+———————+|  a   |<br>    |        UEFI           ||  i   |<br>    | +———+———+———+||  n   |<br>    | |NANDC | SATAC| PXE  |||      |<br>    | +———+———+———+||      |<br>    +———————————-++———+<br>And you could download the binary from the link:</p>
-<pre><code>http<span class="variable">s:</span>//github.<span class="keyword">com</span>/HTSAT/build_linux_d02
+<p>The software architecture on D02 is consistented of UEFI,GRUB,Kernel,Distribution and Toolchain.The architecture of D02 is as follow:</p>
+<pre><code>+-----------------------++------+
+| <span class="class">NANDRootfs</span>  ubuntu    ||  <span class="class">T</span>   |
+| <span class="class">OpenSuse</span> <span class="class">Debian</span> <span class="class">Fedora</span>|<span class="localvars">|  o   |</span>
++-----------------------+<span class="localvars">|  o   |</span>
+|        <span class="class">Kernel</span>         |<span class="localvars">|  l   |</span>
++--------+              |<span class="localvars">|  c   |</span>
+|  <span class="class">GRUB</span>  |              |<span class="localvars">|  h   |</span>
++--------+--------------+<span class="localvars">|  a   |</span>
+|        <span class="class">UEFI</span>           |<span class="localvars">|  i   |</span>
+| +------+------+------+|<span class="localvars">|  n   |</span>
+| |<span class="class">NANDC</span> | <span class="class">SATAC</span>| <span class="class">PXE</span>  |||      |
+| +------+------+------+||      |
++-----------------------++------+
+</code></pre><p>And you could download the binary from the link:</p>
+<pre><code><span class="keyword">https</span>://github.com/hisilicon/d02_binary
+
++<span class="comment">------------------+------------------------------------+       </span>
+|  filename        |    description                     |
++<span class="comment">------------------+------------------------------------+    </span>
+|  D02.fd          |    UEFI binary                     |
++<span class="comment">------------------+------------------------------------+   </span>
+|  bl1.bin         |    Trust Fireware binary           |
+|  fip.bin         |                                    |
++<span class="comment">------------------+------------------------------------+                    </span>
+|arch64aa.efi      |    grub binary                     |
++<span class="comment">------------------+------------------------------------+       </span>
+|  grub.cfg        |    grub configure                  |        
++<span class="comment">------------------+------------------------------------+       </span>
+|  Image           |    kernel image <span class="operator">of</span> <span class="number">3.19</span>            |
++<span class="comment">------------------+------------------------------------+</span>
+|hip05-d02.dtb     |    dtb <span class="built_in">file</span> <span class="keyword">for</span> kernel <span class="number">3.19</span>        |
++<span class="comment">------------------+------------------------------------+              </span>
+|filesystem.cpio.gz|    initramfs stored <span class="operator">in</span> NAND        |   
++<span class="comment">------------------+------------------------------------+  </span>
 </code></pre><h3 id="The_function_of_each_component">The function of each component</h3>
 <p><1>UEFI:responsible for loading and booting Image and dtb file,and you could download binary file from:</1></p>
-<pre><code>http<span class="variable">s:</span>//github.<span class="keyword">com</span>/HTSAT/build_linux_d02/tree/master/UEFI
+<pre><code><span class="symbol">https:</span>/<span class="regexp">/github.com/hisilicon</span><span class="regexp">/d02_binary/tree</span><span class="regexp">/master/</span><span class="constant">UEFI</span>
 </code></pre><p><2>GRUB:responsible for loading and booting Image and dtb file in another way,and you could download binary file from:</2></p>
-<pre><code>http<span class="variable">s:</span>//github.<span class="keyword">com</span>/HTSAT/build_linux_d02/tree/master/grub
+<pre><code><span class="symbol">https:</span>/<span class="regexp">/github.com/hisilicon</span><span class="regexp">/d02_binary/tree</span><span class="regexp">/master/grub</span>
 </code></pre><p><3>Kernel:the operation system that D02 runs on,and you could get source code from follow website:</3></p>
-<pre><code>http<span class="variable">s:</span>//github.<span class="keyword">com</span>/HTSAT/htsat.d02
+<pre><code>http<span class="variable">s:</span>//github.<span class="keyword">com</span>/hisilicon/estuary
 </code></pre><p><4>Linux Distribution:current release distributions that D02 runs on, and you could dowload them from website:</4></p>
-<p><5>Toolchain:used to compile and debug some above files, and now you could download it from follow website:</5></p>
+<pre><code><span class="code">+-----------+</span>---------------------------------------------------------+
+| ubuntu    | http://cloud-images.ubuntu.com/releases/14.04/release/  |
+<span class="header">|           | ubuntu-14.04-server-cloudimg-arm64-root.tar.gz          |
++-----------+---------------------------------------------------------+</span>
+| openSUSE  | http://download.opensuse.org/ports/aarch64/             |
+<span class="header">|           |       distribution/13.1/appliances/                     |
++-----------+---------------------------------------------------------+</span>
+<span class="header">| Fedora    |                                                         |
++-----------+---------------------------------------------------------+</span>
+<span class="header">| Debian    |                                                         |
++-----------+---------------------------------------------------------+</span>
+</code></pre><p><5>Toolchain:used to compile and debug some above files, and now you could download it from follow website:</5></p>
 <pre><code><span class="label">http:</span>//releases.linaro<span class="preprocessor">.org</span>/<span class="number">14.09</span>/components/toolchain/binaries/gcc-linaro-aarch64-linux-gnu-<span class="number">4.9</span>-<span class="number">2014.09</span>_linux.tar.bz2
 </code></pre><p><strong><em>Note:you should export the path of toolchain after you download and decompression it.</em></strong></p>
 <h2 id="D02_hacking">D02 hacking</h2>
@@ -312,9 +356,56 @@ devicetree /hip05-d02_3<span class="number">.16</span>.dtb
 </code></pre><p><strong><em>Note: minilinux is the name of default PXE that will boot automatically.Image_3.16 is the name of kernel that locates on root directory of TFTP.hip05-d02_3.16.dtb is the name of dtb file that locates on root directory of TFTP.hulk-hip05.cpio.gz is the name of filesystem that locates on root diretory of TFTP.And you can change the names and locations.</em></strong></p>
 <h3 id="Boot_via_GRUB">Boot via GRUB</h3>
 <p>This part will tell you how to boot D02 via GRUB on SATA disk.In my case, SATA disk<br>will be partitioned into five parts:sda1(EFI part),sda2(ubuntu release),sda3(OpenSUSE release),sda4(miniDistribution),sda5(for user).</p>
-<p><1>Partition and format SATA disk<br>    Format SATA disk: mkfs -t ext4 /dev/sda<br>    Partition SATA disk as follow:<br>    +————-+—————-+———————+—————+<br>    | Name    |   Size    |    Type      |   Tag    |<br>    +————-+—————-+———————+—————+<br>    | sda1    |   200M    |  EFI system  |   EFI    |<br>    +————-+—————-+———————+—————+<br>    | sda2    |   10G     |    ext4      |          |<br>    +————-+—————-+———————+—————+<br>    | sda3    |   10G     |    ext4      |          |<br>    +————-+—————-+———————+—————+<br>    | sda4    |   10G     |    ext4      |          |<br>    +————-+—————-+———————+—————+<br>    | sda5    |rest space |    ext4      |   swap   |<br>    +————-+—————-+———————+—————+ </1></p>
-<p><2>Relative files are placed as follow:<br>    sda1: ———-EFI<br>          |       |<br>              |       ———archaa.efi<br>              |       |<br>          |       ———grub.cfg<br>              |<br>          |——————-Image_3.16<br>          |<br>          |——————-hip05-d02_3.16<br>          |<br>          |——————-Image_3.19<br>          |<br>          |——————-hip05-d02_3.19<br>    sda2: ubuntu distribution<br>     sda3: OpenSUSE distribution<br>    sda4: miniDistribution<br>    sda5: left for user<br><strong><em>Note:The names of grub files archaa.efi and grub.cfg can not be modified.</em></strong></2></p>
-<p><3>modify grub config file according to situation<br>This part we will build 6 different grub config.They are as follow:<br>    +—————-+—————-+————————+—————————+<br>    | boot name |  kernel   |  distribution  |  dtb file        |<br>    +—————-+—————-+————————+—————————+<br>    | ubuntu316 |Image_3.16 |     ubuntu     |hip05-d02_3.16.dtb|<br>    +—————-+—————-+————————+—————————+<br>    | ubuntu319 |Image_3.19 |     ubuntu     |hip05-d02_3.19.dtb|<br>    +—————-+—————-+————————+—————————+<br>    |opensuse316|Image_3.16 |    opensuse    |hip05-d02_3.16.dtb|<br>    +—————-+—————-+————————+—————————+<br>    |opensuse319|Image_3.19 |    opensuse    |hip05-d02_3.19.dtb|<br>    +—————-+—————-+————————+—————————+<br>    | mini316   |Image_3.16 |    mini        |hip05-d02_3.16.dtb|<br>    +—————-+—————-+————————+—————————+<br>    | mini319   |Image_3.19 |    mini        |hip05-d02_3.19.dtb|<br>    +—————-+—————-+————————+—————————+<br>And the context of grub.cfg file is as follow:</3></p>
+<p><1>Partition and format SATA disk<br>    Format SATA disk: mkfs -t ext4 /dev/sda<br>    Partition SATA disk as follow:</1></p>
+<pre><code><span class="code">+---------+</span>-----------<span class="code">+--------------+</span>----------+
+<span class="header">| Name    |   Size    |    Type      |   Tag    |
++---------+-----------+--------------+----------+</span>
+<span class="header">| sda1    |   200M    |  EFI system  |   EFI    |
++---------+-----------+--------------+----------+</span>
+<span class="header">| sda2    |   10G     |    ext4      |          |
++---------+-----------+--------------+----------+</span>
+<span class="header">| sda3    |   10G     |    ext4      |          |
++---------+-----------+--------------+----------+</span>
+<span class="header">| sda4    |   10G     |    ext4      |          |
++---------+-----------+--------------+----------+</span>
+| sda5    |rest space |    ext4      |   swap   |
+<span class="code">+---------+</span>-----------<span class="code">+--------------+</span>----------+ 
+</code></pre><p><2>Relative files are placed as follow:</2></p>
+<pre><code>    sda1: -------EFI
+          <span class="string">|       |</span>
+          <span class="string">|       ------archaa.efi</span>
+          <span class="string">|       |</span>
+          <span class="string">|       ------grub.cfg</span>
+          <span class="string">|</span>
+          <span class="string">|-------------Image_3.1</span>
+          <span class="string">|</span>
+          <span class="string">|-------------hip05-d02_3.16</span>
+          <span class="string">|</span>
+          <span class="string">|-------------Image_3.19</span>
+          <span class="string">|</span>
+          <span class="string">|-------------hip05-d02_3.19</span>
+    sda2: ubuntu distribution
+    sda3: OpenSUSE distribution
+    sda4: miniDistribution
+    sda5: left for user
+</code></pre><p><strong><em>Note:The names of grub files archaa.efi and grub.cfg can not be modified.</em></strong></p>
+<p><3>modify grub config file according to situation<br>This part we will build 6 different grub config.They are as follow:</3></p>
+<pre><code><span class="code">+-----------+</span>-----------<span class="code">+----------------+</span>------------------+
+<span class="header">| boot name |  kernel   |  distribution  |  dtb file        |
++-----------+-----------+----------------+------------------+</span>
+<span class="header">| ubuntu316 |Image_3.16 |     ubuntu     |hip05-d02_3.16.dtb|
++-----------+-----------+----------------+------------------+</span>
+<span class="header">| ubuntu319 |Image_3.19 |     ubuntu     |hip05-d02_3.19.dtb|
++-----------+-----------+----------------+------------------+</span>
+<span class="header">|opensuse316|Image_3.16 |    opensuse    |hip05-d02_3.16.dtb|
++-----------+-----------+----------------+------------------+</span>
+<span class="header">|opensuse319|Image_3.19 |    opensuse    |hip05-d02_3.19.dtb|
++-----------+-----------+----------------+------------------+</span>
+<span class="header">| mini316   |Image_3.16 |    mini        |hip05-d02_3.16.dtb|
++-----------+-----------+----------------+------------------+</span>
+<span class="header">| mini319   |Image_3.19 |    mini        |hip05-d02_3.19.dtb|
++-----------+-----------+----------------+------------------+</span>
+</code></pre><p>And the context of grub.cfg file is as follow:</p>
 <pre><code><span class="comment">#</span>
 <span class="comment"># Sample GRUB configuration file</span>
 <span class="comment">#</span>
@@ -384,23 +475,13 @@ eg. ifconfig -s eth0 <span class="number">192.168.1.102</span> <span class="numb
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/02/11/D02_1/" data-id="0pob9t0bb2yhisa0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/02/11/D02_1/" data-id="np9jfvu7xo8fclv8" class="article-share-link">Share</a>
       
       
     </footer>
   </div>
   
     
-<nav id="article-nav">
-  
-  
-    <a href="/2015/02/11/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Hello World</div>
-    </a>
-  
-</nav>
-
   
 </article>
 
@@ -418,7 +499,7 @@ eg. ifconfig -s eth0 <span class="number">192.168.1.102</span> <span class="numb
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -431,10 +512,6 @@ eg. ifconfig -s eth0 <span class="number">192.168.1.102</span> <span class="numb
         
           <li>
             <a href="/2015/02/11/D02_1/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2015/02/11/hello-world/">Hello World</a>
           </li>
         
       </ul>
