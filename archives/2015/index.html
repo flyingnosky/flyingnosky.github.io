@@ -63,10 +63,10 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-D02_1" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-D02" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/02/11/D02_1/" class="article-date">
-  <time datetime="2015-02-11T11:49:42.000Z" itemprop="datePublished">Feb 11 2015</time>
+    <a href="/2015/02/11/D02/" class="article-date">
+  <time datetime="2015-02-11T12:33:52.000Z" itemprop="datePublished">Feb 11 2015</time>
 </a>
     
   </div>
@@ -78,32 +78,32 @@
         <h2 id="Hisilicon_Opensource_Board_D02_hacking_manual">Hisilicon Opensource Board D02 hacking manual</h2>
 <h2 id="Overview">Overview</h2>
 <ul>
-<li>D02 Board Hardwawre Feature<ul>
-<li>The Architecture of D02</li>
-<li>The function of each component<ul>
-<li>UEFI</li>
-<li>GRUB</li>
-<li>Kernel</li>
-<li>Distributions</li>
-<li>Toolchain</li>
+<li><a href="#hardware">D02 Board Hardwawre Feature</a><ul>
+<li><a href="#architure">The Architecture of D02</a></li>
+<li><a href="#function">The function of each component</a><ul>
+<li><a href="#UEFI">UEFI</a></li>
+<li><a href="#GRUB">GRUB</a></li>
+<li><a href="#kernel">Kernel</a></li>
+<li><a href="#dist">Distributions</a></li>
+<li><a href="#toolchain">Toolchain</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li>D02 Hacking<ul>
-<li>UEFI hacking</li>
-<li>Kernel hacking</li>
-<li>Boot via NAND</li>
-<li>Boot via SATA</li>
-<li>Boot via PXE</li>
-<li>Boot via GRUB</li>
-<li>Boot via ACPI</li>
+<li><a href="#hacking">D02 Hacking</a><ul>
+<li><a href="#UEFIh">UEFI hacking</a></li>
+<li><a href="#kernelh">Kernel hacking</a></li>
+<li><a href="#NAND">Boot via NAND</a></li>
+<li><a href="#SATA">Boot via SATA</a></li>
+<li><a href="#PXE">Boot via PXE</a></li>
+<li><a href="#GRUB">Boot via GRUB</a></li>
+<li><a href="#ACPI">Boot via ACPI</a></li>
 </ul>
 </li>
 </ul>
-<h2 id="D02_Board_Hardware_Features">D02 Board Hardware Features</h2>
+<h2 id="D02_Board_Hardware_Features"><span id="hardware">D02 Board Hardware Features</span></h2>
 <p>Major hardware features of D02 are listed as follow:<br>    <img src="/img/hardware.png" alt=""></p>
-<h3 id="The_Architecture_of_D02">The Architecture of D02</h3>
+<h3 id="The_Architecture_of_D02"><span id="architure">The Architecture of D02</span></h3>
 <p>The software architecture on D02 is consistented of UEFI,GRUB,Kernel,Distribution and Toolchain.The architecture of D02 is as follow:</p>
 <pre><code>+-----------------------++------+
 | <span class="class">NANDRootfs</span>  ubuntu    ||  <span class="class">T</span>   |
@@ -139,14 +139,14 @@
 +<span class="comment">------------------+------------------------------------+              </span>
 |filesystem.cpio.gz|    initramfs stored <span class="operator">in</span> NAND        |   
 +<span class="comment">------------------+------------------------------------+  </span>
-</code></pre><h3 id="The_function_of_each_component">The function of each component</h3>
-<p><1>UEFI:responsible for loading and booting Image and dtb file,and you could download binary file from:</1></p>
+</code></pre><h3 id="_The_function_of_each_component"><span id="function"> The function of each component</span></h3>
+<p><1><span id="UEFI">UEFI</span>:responsible for loading and booting Image and dtb file,and you could download binary file from:</1></p>
 <pre><code><span class="symbol">https:</span>/<span class="regexp">/github.com/hisilicon</span><span class="regexp">/d02_binary/tree</span><span class="regexp">/master/</span><span class="constant">UEFI</span>
-</code></pre><p><2>GRUB:responsible for loading and booting Image and dtb file in another way,and you could download binary file from:</2></p>
+</code></pre><p><2><span id="GRUB">GRUB</span>:responsible for loading and booting Image and dtb file in another way,and you could download binary file from:</2></p>
 <pre><code><span class="symbol">https:</span>/<span class="regexp">/github.com/hisilicon</span><span class="regexp">/d02_binary/tree</span><span class="regexp">/master/grub</span>
-</code></pre><p><3>Kernel:the operation system that D02 runs on,and you could get source code from follow website:</3></p>
+</code></pre><p><3><span id="kernel">Kernel</span>:the operation system that D02 runs on,and you could get source code from follow website:</3></p>
 <pre><code>http<span class="variable">s:</span>//github.<span class="keyword">com</span>/hisilicon/estuary
-</code></pre><p><4>Linux Distribution:current release distributions that D02 runs on, and you could dowload them from website:</4></p>
+</code></pre><p><4><span id="dist">Linux Distribution</span>:current release distributions that D02 runs on, and you could dowload them from website:</4></p>
 <pre><code><span class="code">+-----------+</span>---------------------------------------------------------+
 | ubuntu    | http://cloud-images.ubuntu.com/releases/14.04/release/  |
 <span class="header">|           | ubuntu-14.04-server-cloudimg-arm64-root.tar.gz          |
@@ -158,11 +158,11 @@
 +-----------+---------------------------------------------------------+</span>
 <span class="header">| Debian    |                                                         |
 +-----------+---------------------------------------------------------+</span>
-</code></pre><p><5>Toolchain:used to compile and debug some above files, and now you could download it from follow website:</5></p>
+</code></pre><p><5><span id="toolchain">Toolchain</span>:used to compile and debug some above files, and now you could download it from follow website:</5></p>
 <pre><code><span class="label">http:</span>//releases.linaro<span class="preprocessor">.org</span>/<span class="number">14.09</span>/components/toolchain/binaries/gcc-linaro-aarch64-linux-gnu-<span class="number">4.9</span>-<span class="number">2014.09</span>_linux.tar.bz2
 </code></pre><p><strong><em>Note:you should export the path of toolchain after you download and decompression it.</em></strong></p>
-<h2 id="D02_hacking">D02 hacking</h2>
-<h3 id="UEFI_hacking">UEFI hacking</h3>
+<h2 id="D02_hacking"><span id="hacking">D02 hacking</span></h2>
+<h3 id="UEFI_hacking"><span id="UEFIh">UEFI hacking</span></h3>
 <p>FTP protocol is used for downloading between D02 and local network.So before this step, please make sure you have a working FTP server in local network. D02 could get files from network using FTP.</p>
 <p><1>Prepare files about UEFI on local computer<br>There are three files which should be prepared before hacking UEFI:D02.fd for BIOS, bl1.bin and fip.bin for Trust Fireware.Then put them on the root directory of FTP.</1></p>
 <p><2>Boot D02 to UEFI SHELL<br>Follow these steps to UEFI SHELL:</2></p>
@@ -213,14 +213,14 @@ eg. provision <span class="number">192.168</span>.<span class="number">10.102</s
     spiwfmem <span class="number">100000</span> <span class="number">220000</span> <span class="number">10000</span>
 </code></pre><p>Then D02 must be reset or powered off after this step.</p>
 <p><strong><em>Note:The first time you boot D02,you have to update UEFI files,and this step is not necessary next time.</em></strong></p>
-<h3 id="Kernel_Hacking">Kernel Hacking</h3>
+<h3 id="_Kernel_Hacking"><span id="kernelh"> Kernel Hacking</span></h3>
 <p><1>Download kernel source code from above section</1></p>
 <p><2>Setting envirnment from compiling D02 as above</2></p>
 <p><3>Build steps as follow:</3></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> ARCH=arm64</div><div class="line"><span class="keyword">export</span> CROSS_COMPILE=aarch64-linux-gnu-</div><div class="line">make hulk_defconfig</div><div class="line">make -j16</div><div class="line">make ./hisilicon/hip05<span class="operator">-d</span>02.dtb</div></pre></td></tr></table></figure>
 
 <p>Then there are two files that have been created:Image in the directory <strong>arch/arm64/boot/</strong>, and hip05-d02.dtb in the directory <strong>arch/arm64/boot/dts/hisilicon</strong></p>
-<h3 id="Boot_via_NAND">Boot via NAND</h3>
+<h3 id="Boot_via_NAND"><span id="NAND">Boot via NAND</span></h3>
 <p>Boot D02 to UEFI SHELL, and type the follow commands in EBL:</p>
 <p><1>IP address config</1></p>
 <pre><code><span class="title">ifconfig</span> -s eth0 [IP.address] [mask] [gateway]
@@ -236,7 +236,7 @@ eg. provision <span class="number">192.168</span>.<span class="number">10.102</s
 <span class="tag">eg</span>. <span class="tag">provision</span> 192<span class="class">.168</span><span class="class">.10</span><span class="class">.102</span> <span class="tag">-u</span> <span class="tag">sch</span> <span class="tag">-p</span> <span class="tag">aaa</span> <span class="tag">-f</span> <span class="tag">filesystem</span><span class="class">.cpio</span><span class="class">.gz</span> <span class="tag">-a</span> 0<span class="tag">x7000000</span>
 </code></pre><p><5>Reboot D02<br>    exit ESL and select 5:ESL Start OS</5></p>
 <p>show &amp; change kernel command line in UEFI</p>
-<h3 id="Boot_ubuntu_on_SATA_disk">Boot ubuntu on SATA disk</h3>
+<h3 id="_Boot_ubuntu_on_SATA_disk"><span id="SATA"> Boot ubuntu on SATA disk</span></h3>
 <p><1>Download ubuntu release for D02 as above section</1></p>
 <p><2>Boot D02 via NAND as above section</2></p>
 <p><3>Partition and format SATA disk<br>    Create one ext4 partition of at least 10G to host the root filesystem.In my case, it is /dev/sda1</3></p>
@@ -250,7 +250,7 @@ mount -t ext4 <span class="regexp">/dev/</span>sda1 <span class="regexp">/mnt/</
 <p><8>Change kernel command line.</8></p>
 <pre><code><span class="variable">console=</span>ttyS0,<span class="number">115200</span> <span class="variable">root=</span>/dev/sda1 <span class="variable">rootfstype=</span>ext4 rw earlyprintk
 </code></pre><p><strong><em>Note:you should change /dev/sda1 according to your SATA disk situation</em></strong></p>
-<h3 id="Boot_via_PXE">Boot via PXE</h3>
+<h3 id="_Boot_via_PXE"><span id="PXE"> Boot via PXE</span></h3>
 <p>PXE boot depends on DHCP and TFTP services.So before verifing PXE, you need to setup a working DHCP server and TFTP server on your local network. In this case, my case is on ubuntu.</p>
 <p><1>Setup DHCP server on ubuntu<br>Refer to <a href="https://help.ubuntu.com/community/isc-dhcp-server.For" target="_blank" rel="external">https://help.ubuntu.com/community/isc-dhcp-server.For</a> a simplified direction, try these steps:<br>a.Install DHCP server package</1></p>
 <pre><code>sudo apt-get <span class="operator"><span class="keyword">install</span> isc-dhcp-<span class="keyword">server</span></span>
@@ -307,7 +307,7 @@ initrd /hulk-hip05.cpio.gz
 devicetree /hip05-d02_3<span class="number">.16</span>.dtb
 }
 </code></pre><p><strong><em>Note: minilinux is the name of default PXE that will boot automatically.Image_3.16 is the name of kernel that locates on root directory of TFTP.hip05-d02_3.16.dtb is the name of dtb file that locates on root directory of TFTP.hulk-hip05.cpio.gz is the name of filesystem that locates on root diretory of TFTP.And you can change the names and locations.</em></strong></p>
-<h3 id="Boot_via_GRUB">Boot via GRUB</h3>
+<h3 id="_Boot_via_GRUB"><span id="GRUB"> Boot via GRUB</span></h3>
 <p>This part will tell you how to boot D02 via GRUB on SATA disk.In my case, SATA disk<br>will be partitioned into five parts:sda1(EFI part),sda2(ubuntu release),sda3(OpenSUSE release),sda4(miniDistribution),sda5(for user).</p>
 <p><1>Partition and format SATA disk<br>    Format SATA disk: mkfs -t ext4 /dev/sda<br>    Partition SATA disk as follow:</1></p>
 <pre><code><span class="code">+---------+</span>-----------<span class="code">+--------------+</span>----------+
@@ -401,7 +401,7 @@ devicetree /hip05-d02_3.<span class="number">19</span>.dtb
 <p><4>Reboot and enter UEFI menu</4></p>
 <p><5>Select boot from HD</5></p>
 <p><6>Type arrow key up and down to select grub boot menu to decise which kernel and<br>distribution to boot</6></p>
-<h3 id="Boot_via_ACPI">Boot via ACPI</h3>
+<h3 id="_Boot_via_ACPI"><span id="ACPI"> Boot via ACPI</span></h3>
 <p>D02 also supports booting via ACPI,and the steps are as follows:</p>
 <p><1>Power on and enter UEFI SHELL</1></p>
 <p><2>IP address config</2></p>
@@ -428,7 +428,7 @@ eg. ifconfig -s eth0 <span class="number">192.168.1.102</span> <span class="numb
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/02/11/D02_1/" data-id="np9jfvu7xo8fclv8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/02/11/D02/" data-id="yxakn8h3bpo0h4s1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -465,7 +465,7 @@ eg. ifconfig -s eth0 <span class="number">192.168.1.102</span> <span class="numb
       <ul>
         
           <li>
-            <a href="/2015/02/11/D02_1/">(no title)</a>
+            <a href="/2015/02/11/D02/">(no title)</a>
           </li>
         
       </ul>
