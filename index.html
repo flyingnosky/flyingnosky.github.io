@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description">
+
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-D02_1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/02/11/D02_1/" class="article-date">
+  <time datetime="2015-02-11T03:57:13.000Z" itemprop="datePublished">Feb 11 2015</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Hisilicon_Opensource_Board_D02_hacking_manual">Hisilicon Opensource Board D02 hacking manual</h1>
+<h2 id="Overview">Overview</h2>
+<ul>
+<li>D02 Board Hardwawre Feature<ul>
+<li>The Architecture of D02</li>
+<li>The function of each component<ul>
+<li>UEFI</li>
+<li>GRUB</li>
+<li>Kernel</li>
+<li>Distributions</li>
+<li>Toolchain</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>D02 Hacking<ul>
+<li>UEFI hacking</li>
+<li>Kernel hacking</li>
+<li>Boot via NAND</li>
+<li>Boot via SATA</li>
+<li>Boot via PXE</li>
+<li>Boot via GRUB</li>
+<li>Boot via ACPI</li>
+</ul>
+</li>
+</ul>
+<h2 id="D02_Board_Hardware_Features">D02 Board Hardware Features</h2>
+<p>Major hardware features of D02 are listed as follow:</p>
+<p>+————————————+——————————————————————+<br>|Features                |Description                             |<br>+————————————+——————————————————————+<br>|Board                 | SSI-EEB/E-ATX Compatible               |<br>+————————————+——————————————————————+<br>|Processors              | 16xARM Cortex-A57@max 2.1GHz               |<br>|                 | Support ARMv8-A instruction set            |<br>+————————————+——————————————————————+<br>|Memory                  | 2x Memory channel 4x DDR3 DIMM             |<br>|                        | 2x SPI Flash 158Mb BIOS/UEFI               |<br>|                        | 1Gb NorFlash                               |<br>+————————————+——————————————————————+<br>|Peripheral interfaces   | 1x USB2.0 host port                        |<br>|                        | 1x UART interface                          |<br>|                        | 8x SAS3.0                                  |<br>|                        | 1X ARM Tracer connector                    |<br>|                        | 1x JTAG interface                          |<br>+————————————+——————————————————————+<br>|Expansion Capabilities  | 2 8x PCI express interfaces                |<br>+————————————+——————————————————————+<br>|LAN                     | 2x10/100/1000Mbit/s Gigabit Ethernet ports |<br>|             | 2x XGE SEP+                                |<br>+————————————+——————————————————————+<br>|Other                   | RTC battery                                |<br>+————————————+——————————————————————+</p>
+<h3 id="The_Architecture_of_D02">The Architecture of D02</h3>
+<p>The software architecture on D02 is consistented of UEFI,GRUB,Kernel,Distribution and Toolchain.The architecture of D02 is as follow:<br>    +———————————-++———+<br>    | NANDRootfs  ubuntu    ||  T   |<br>    | OpenSuse Debian Fedora||  o   |<br>    +———————————-+|  o   |<br>    |        Kernel         ||  l   |<br>    +————+              ||  c   |<br>    |  GRUB  |              ||  h   |<br>    +————+———————+|  a   |<br>    |        UEFI           ||  i   |<br>    | +———+———+———+||  n   |<br>    | |NANDC | SATAC| PXE  |||      |<br>    | +———+———+———+||      |<br>    +———————————-++———+<br>And you could download the binary from the link:</p>
+<pre><code>http<span class="variable">s:</span>//github.<span class="keyword">com</span>/HTSAT/build_linux_d02
+</code></pre><h3 id="The_function_of_each_component">The function of each component</h3>
+<p><1>UEFI:responsible for loading and booting Image and dtb file,and you could download binary file from:</1></p>
+<pre><code>http<span class="variable">s:</span>//github.<span class="keyword">com</span>/HTSAT/build_linux_d02/tree/master/UEFI
+</code></pre><p><2>GRUB:responsible for loading and booting Image and dtb file in another way,and you could download binary file from:</2></p>
+<pre><code>http<span class="variable">s:</span>//github.<span class="keyword">com</span>/HTSAT/build_linux_d02/tree/master/grub
+</code></pre><p><3>Kernel:the operation system that D02 runs on,and you could get source code from follow website:</3></p>
+<pre><code>http<span class="variable">s:</span>//github.<span class="keyword">com</span>/HTSAT/htsat.d02
+</code></pre><p><4>Linux Distribution:current release distributions that D02 runs on, and you could dowload them from website:</4></p>
+<p><5>Toolchain:used to compile and debug some above files, and now you could download it from follow website:</5></p>
+<pre><code><span class="label">http:</span>//releases.linaro<span class="preprocessor">.org</span>/<span class="number">14.09</span>/components/toolchain/binaries/gcc-linaro-aarch64-linux-gnu-<span class="number">4.9</span>-<span class="number">2014.09</span>_linux.tar.bz2
+</code></pre><p><strong><em>Note:you should export the path of toolchain after you download and decompression it.</em></strong></p>
+<h2 id="D02_hacking">D02 hacking</h2>
+<h3 id="UEFI_hacking">UEFI hacking</h3>
+<p>FTP protocol is used for downloading between D02 and local network.So before this step, please make sure you have a working FTP server in local network. D02 could get files from network using FTP.</p>
+<p><1>Prepare files about UEFI on local computer<br>There are three files which should be prepared before hacking UEFI:D02.fd for BIOS, bl1.bin and fip.bin for Trust Fireware.Then put them on the root directory of FTP.</1></p>
+<p><2>Boot D02 to UEFI SHELL<br>Follow these steps to UEFI SHELL:</2></p>
+<p>a.Serial port setting:115200/8/N/1</p>
+<p>b.Power on and select 1:</p>
+<p>c.Press any key to start UEFI Boot Menu;</p>
+<p>d.Select 3 EBL</p>
+<p>Then D02 enters the UEFI SHELL.</p>
+<p><3>Update UEFI files<br>a.IP address config</3></p>
+<pre><code><span class="title">ifconfig</span> -s eth0 [IP.address] [mask] [gateway]
+  eg. ifconfig -s eth0  <span class="number">192.168.10.4</span> <span class="number">255.255.255.0</span> <span class="number">192.168.10.1</span>
+</code></pre><p>b.Burn UEFI file for BIOS</p>
+<pre><code><span class="tag">provision</span> <span class="attr_selector">[server.IP]</span> <span class="tag">-u</span> <span class="attr_selector">[user.name]</span> <span class="tag">-p</span> <span class="attr_selector">[passwd]</span> <span class="tag">-f</span> <span class="attr_selector">[UEFI.fd]</span> <span class="tag">-a</span> <span class="attr_selector">[address]</span>
+<span class="tag">eg</span>. <span class="tag">provision</span> 192<span class="class">.168</span><span class="class">.10</span><span class="class">.102</span> <span class="tag">-u</span> <span class="tag">sch</span> <span class="tag">-p</span> <span class="tag">aaa</span> <span class="tag">-f</span> <span class="tag">D02</span><span class="class">.fd</span> <span class="tag">-a</span> 100000
+     <span class="tag">spiwfmem</span> 100000 0000000 200000
+</code></pre><p>c.Burn files for Trust Firmware </p>
+<pre><code>provision [server.IP] -u [user.name] -p [passwd] <span class="operator">-f</span> bl1.bin <span class="operator">-a</span> [address]
+provision [server.IP] -u [user.name] -p [passwd] <span class="operator">-f</span> fip.bin <span class="operator">-a</span> [address]
+eg. provision <span class="number">192.168</span>.<span class="number">10.102</span> -u sch -p aaa <span class="operator">-f</span> bl1.bin <span class="operator">-a</span> <span class="number">100000</span>
+    spiwfmem <span class="number">100000</span> <span class="number">200000</span> <span class="number">10000</span>
+        provision <span class="number">192.168</span>.<span class="number">10.102</span> -u sch -p aaa <span class="operator">-f</span> fip.bin <span class="operator">-a</span> <span class="number">100000</span>
+    spiwfmem <span class="number">100000</span> <span class="number">220000</span> <span class="number">10000</span>
+</code></pre><p>Then D02 must be reset or powered off after this step.</p>
+<p><strong><em>Note:The first time you boot D02,you have to update UEFI files,and this step is not necessary next time.</em></strong></p>
+<h3 id="how_to_restore_the_UEFI_when_UEFI_doesn’t_work">how to restore the UEFI when UEFI doesn’t work</h3>
+<p>Actually D02 can restore two UEFI in case of failure in the default UEFI.you can resore UEFI in the follow way:</p>
+<p><1>Power off the board and disconnect power supply</1></p>
+<p><2>Push the dial swift s3 to the side that has silk screen ‘3’</2></p>
+<p><3>Power on and enter UEFI SHELL</3></p>
+<p><4>IP address config</4></p>
+<pre><code><span class="title">ifconfig</span> -s eth0 [IP.address] [mask] [gateway]
+  eg. ifconfig -s eth0  <span class="number">192.168.10.4</span> <span class="number">255.255.255.0</span> <span class="number">192.168.10.1</span>
+</code></pre><p><5>Push the dial swift s3 to the other side that has no silk screen ‘s’</5></p>
+<p><6>Burn UEFI file for BIOS as above part<br>Then you have updated your failture BIOS.Then D02 enters the UEFI SHELL.</6></p>
+<p><3>Update UEFI files<br>a.IP address config</3></p>
+<pre><code><span class="title">ifconfig</span> -s eth0 [IP.address] [mask] [gateway]
+  eg. ifconfig -s eth0  <span class="number">192.168.10.4</span> <span class="number">255.255.255.0</span> <span class="number">192.168.10.1</span>
+</code></pre><p>b.Burn UEFI file for BIOS</p>
+<pre><code><span class="tag">provision</span> <span class="attr_selector">[server.IP]</span> <span class="tag">-u</span> <span class="attr_selector">[user.name]</span> <span class="tag">-p</span> <span class="attr_selector">[passwd]</span> <span class="tag">-f</span> <span class="attr_selector">[UEFI.fd]</span> <span class="tag">-a</span> <span class="attr_selector">[address]</span>
+<span class="tag">eg</span>. <span class="tag">provision</span> 192<span class="class">.168</span><span class="class">.10</span><span class="class">.102</span> <span class="tag">-u</span> <span class="tag">sch</span> <span class="tag">-p</span> <span class="tag">aaa</span> <span class="tag">-f</span> <span class="tag">D02</span><span class="class">.fd</span> <span class="tag">-a</span> 100000
+     <span class="tag">spiwfmem</span> 100000 0000000 200000
+</code></pre><p>c.Burn files for Trust Firmware </p>
+<pre><code>provision [server.IP] -u [user.name] -p [passwd] <span class="operator">-f</span> bl1.bin <span class="operator">-a</span> [address]
+provision [server.IP] -u [user.name] -p [passwd] <span class="operator">-f</span> fip.bin <span class="operator">-a</span> [address]
+eg. provision <span class="number">192.168</span>.<span class="number">10.102</span> -u sch -p aaa <span class="operator">-f</span> bl1.bin <span class="operator">-a</span> <span class="number">100000</span>
+    spiwfmem <span class="number">100000</span> <span class="number">200000</span> <span class="number">10000</span>
+        provision <span class="number">192.168</span>.<span class="number">10.102</span> -u sch -p aaa <span class="operator">-f</span> fip.bin <span class="operator">-a</span> <span class="number">100000</span>
+    spiwfmem <span class="number">100000</span> <span class="number">220000</span> <span class="number">10000</span>
+</code></pre><p>Then D02 must be reset or powered off after this step.</p>
+<p><strong><em>Note:The first time you boot D02,you have to update UEFI files,and this step is not necessary next time.</em></strong></p>
+<h3 id="Kernel_Hacking">Kernel Hacking</h3>
+<p><1>Download kernel source code from above section</1></p>
+<p><2>Setting envirnment from compiling D02 as above</2></p>
+<p><3>Build steps as follow:</3></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> ARCH=arm64</div><div class="line"><span class="keyword">export</span> CROSS_COMPILE=aarch64-linux-gnu-</div><div class="line">make hulk_defconfig</div><div class="line">make -j16</div><div class="line">make ./hisilicon/hip05<span class="operator">-d</span>02.dtb</div></pre></td></tr></table></figure>
+
+<p>Then there are two files that have been created:Image in the directory <strong>arch/arm64/boot/</strong>, and hip05-d02.dtb in the directory <strong>arch/arm64/boot/dts/hisilicon</strong></p>
+<h3 id="Boot_via_NAND">Boot via NAND</h3>
+<p>Boot D02 to UEFI SHELL, and type the follow commands in EBL:</p>
+<p><1>IP address config</1></p>
+<pre><code><span class="title">ifconfig</span> -s eth0 [IP.address] [mask] [gateway]
+eg. provision <span class="number">192.168.10.102</span> <span class="number">255.255.255.0</span> <span class="number">102.168.10.1</span>
+</code></pre><p><2>Download Image binary file from FTP</2></p>
+<pre><code><span class="tag">provision</span> <span class="attr_selector">[server.IP]</span> <span class="tag">-u</span> <span class="attr_selector">[user.name]</span> <span class="tag">-p</span> <span class="attr_selector">[passwd]</span> <span class="tag">-f</span> <span class="attr_selector">[image.file]</span> <span class="tag">-a</span> <span class="attr_selector">[address]</span>
+<span class="tag">eg</span>. <span class="tag">provision</span> 192<span class="class">.168</span><span class="class">.10</span><span class="class">.102</span> <span class="tag">-u</span> <span class="tag">sch</span> <span class="tag">-p</span> <span class="tag">aaa</span> <span class="tag">-f</span> <span class="tag">Image</span> <span class="tag">-a</span> 0<span class="tag">x80000</span>
+</code></pre><p><3>Download dtb file from FTP</3></p>
+<pre><code>provision [server.IP] -u [user.name] -p [passwd] <span class="operator">-f</span> [dtb.file] <span class="operator">-a</span> [address]
+eg. provision <span class="number">192.168</span>.<span class="number">10.102</span> -u sch -p aaa <span class="operator">-f</span> hip05<span class="operator">-d</span>02.dtb <span class="operator">-a</span>
+</code></pre><p><4>Download filesystem file from FTP</4></p>
+<pre><code><span class="tag">provision</span> <span class="attr_selector">[server.IP]</span> <span class="tag">-u</span> <span class="attr_selector">[user.name]</span> <span class="tag">-p</span> <span class="attr_selector">[passwd]</span> <span class="tag">-f</span> <span class="attr_selector">[filesystem]</span> <span class="tag">-a</span> <span class="attr_selector">[address]</span>
+<span class="tag">eg</span>. <span class="tag">provision</span> 192<span class="class">.168</span><span class="class">.10</span><span class="class">.102</span> <span class="tag">-u</span> <span class="tag">sch</span> <span class="tag">-p</span> <span class="tag">aaa</span> <span class="tag">-f</span> <span class="tag">filesystem</span><span class="class">.cpio</span><span class="class">.gz</span> <span class="tag">-a</span> 0<span class="tag">x7000000</span>
+</code></pre><p><5>Reboot D02<br>    exit ESL and select 5:ESL Start OS</5></p>
+<p>show &amp; change kernel command line in UEFI</p>
+<h3 id="Boot_ubuntu_on_SATA_disk">Boot ubuntu on SATA disk</h3>
+<p><1>Download ubuntu release for D02 as above section</1></p>
+<p><2>Boot D02 via NAND as above section</2></p>
+<p><3>Partition and format SATA disk<br>    Create one ext4 partition of at least 10G to host the root filesystem.In my case, it is /dev/sda1</3></p>
+<p><4>Mount /dev/sda1 to D02’s directory /dev/sda1</4></p>
+<pre><code>mkdir <span class="regexp">/mnt/</span>sda1
+mount -t ext4 <span class="regexp">/dev/</span>sda1 <span class="regexp">/mnt/</span>sda1
+</code></pre><p><5>Exact ubuntu server release to /mnt/sda1<br>    You could exact this distribution to the directory with FTP</5></p>
+<pre><code>scp [user.name]@[ip.address]<span class="symbol">:/U/B/U/N/T/U/P/A/T/H</span> /mnt/sda1
+</code></pre><p><6>Unmount /dev/sda1</6></p>
+<p><7>Reboot and enter UEFI EBL SHELL according to UEFI hacking part</7></p>
+<p><8>Change kernel command line.</8></p>
+<pre><code><span class="variable">console=</span>ttyS0,<span class="number">115200</span> <span class="variable">root=</span>/dev/sda1 <span class="variable">rootfstype=</span>ext4 rw earlyprintk
+</code></pre><p><strong><em>Note:you should change /dev/sda1 according to your SATA disk situation</em></strong></p>
+<h3 id="Boot_via_PXE">Boot via PXE</h3>
+<p>PXE boot depends on DHCP and TFTP services.So before verifing PXE, you need to setup a working DHCP server and TFTP server on your local network. In this case, my case is on ubuntu.</p>
+<p><1>Setup DHCP server on ubuntu<br>Refer to <a href="https://help.ubuntu.com/community/isc-dhcp-server.For" target="_blank" rel="external">https://help.ubuntu.com/community/isc-dhcp-server.For</a> a simplified direction, try these steps:<br>a.Install DHCP server package</1></p>
+<pre><code>sudo apt-get <span class="operator"><span class="keyword">install</span> isc-dhcp-<span class="keyword">server</span></span>
+</code></pre><p>b.Edit /etc/dhcp/dhcpd.conf to suit your needs and particular configuration.Make sure filename is “grub2.efi”. Here is an example:</p>
+<pre><code> $ cat /etc/dhcp/dhcpd.conf
+ <span class="preprocessor"># Sample /etc/dhcpd.conf</span>
+ <span class="preprocessor"># (add your comments here)</span>
+ default-lease-time <span class="number">600</span>;
+ <span class="built_in">max</span>-lease-time <span class="number">7200</span>;
+ <span class="built_in">option</span> subnet-mask <span class="number">255.255</span><span class="number">.255</span><span class="number">.0</span>;
+ <span class="built_in">option</span> broadcast-address <span class="number">192.168</span><span class="number">.0</span><span class="number">.255</span>;
+ <span class="built_in">option</span> routers <span class="number">192.168</span><span class="number">.0</span><span class="number">.1</span>;
+ <span class="built_in">option</span> domain-name-servers <span class="number">192.168</span><span class="number">.0</span><span class="number">.1</span>;
+ <span class="built_in">option</span> domain-name <span class="string">"mydomain.example"</span>;
+ subnet <span class="number">192.168</span><span class="number">.0</span><span class="number">.0</span> netmask <span class="number">255.255</span><span class="number">.255</span><span class="number">.0</span> {
+     range <span class="number">192.168</span><span class="number">.0</span><span class="number">.160</span> <span class="number">192.168</span><span class="number">.0</span><span class="number">.180</span>;
+     <span class="built_in">option</span> subnet-mask <span class="number">255.255</span><span class="number">.255</span><span class="number">.0</span>;
+     filename <span class="string">"grub2.efi"</span>;
+ }
+ <span class="preprocessor">#</span>
+</code></pre><p>c.Edit /etc/default/isc-dhcp-server to specify the interfaces dhcpd<br>      should listen to. By default it listens to eth0.<br>      Assign a static ip to the interface that you will use for dhcp.<br>d.Use these commands to start or check dhcp service</p>
+<pre><code>  <span class="built_in">sudo</span> service isc-dhcp-server status
+  <span class="built_in">sudo</span> service isc-dhcp-server start
+</code></pre><p><2>Setup TFTP server on ubuntu<br>a.Install TFTP server and TFTP client(optional, tftp-hpa is the client package)</2></p>
+<pre><code>  <span class="built_in">sudo</span> apt-get install tftpd-hpa tftp-hpa
+</code></pre><p>b.Configure the TFTP server, update /etc/default/tftpd-hpa like following:</p>
+<pre><code><span class="constant">  TFTP_USERNAME</span>=tftp
+<span class="constant">  TFTP_ADDRESS</span>=<span class="number">0.0</span>.<span class="number">0.0</span>:<span class="number">69</span>
+<span class="constant">  TFTP_DIRECTORY</span>=/var/lib/tftpboot
+<span class="constant">  TFTP_OPTIONS</span>=-l -c -s
+</code></pre><p>c.Set up TFTP server directory</p>
+<pre><code>  sudo mkdir /<span class="reserved">var</span>/lib/tftpboot
+  sudo chmod -R <span class="number">777</span> /<span class="reserved">var</span><span class="regexp">/lib/tftpboot/</span>
+</code></pre><p>d.Restart TFTP server</p>
+<pre><code>  service tftpd-hpa status
+  service tftpd-hpa restart
+  service tftpd-hpa <span class="literal">force</span>-reload
+</code></pre><p><3>Prepare some files on the TFTP root path<br>    The files include:grub binary file, grub configure file,Image and dtb file. In my case, they are grubaa64_linux.efi, grub.cfg-01-xx-xx-xx-xx-xx-xx,hip05-d02.dtb and Image.</3></p>
+<p><strong><em>Note:The grub configure file grub.cfg-01-xx-xx-xx-xx-xx-xx ends in D02’s mac address.</em></strong></p>
+<p><4>Reboot and enter UEFI boot menu</4></p>
+<p><5>Select boot from PXE<br>After seral seconds,D02 will boot automaticlly.<br>The content of grub file as follow:</5></p>
+<pre><code><span class="preprocessor">#</span>
+<span class="preprocessor"># Sample GRUB configuration file</span>
+<span class="preprocessor">#</span>
+<span class="preprocessor"># Boot automatically after 0 secs.</span>
+<span class="keyword">set</span> timeout=<span class="number">5</span>
+<span class="preprocessor"># By default, boot the Euler/Linux</span>
+<span class="keyword">set</span> <span class="keyword">default</span>=minilinux
+<span class="preprocessor"># For booting GNU/Linux</span>
+menuentry <span class="string">"Mini-Linux"</span> --id minilinux {
+<span class="keyword">set</span> root=(tftp,<span class="number">192.168</span><span class="number">.1</span><span class="number">.110</span>)
+linux /Image_3<span class="number">.16</span> rdinit=/init console=ttyS0,<span class="number">115200</span> earlycon=uart8250,mmio32,<span class="number">0x80300000</span>
+initrd /hulk-hip05.cpio.gz
+devicetree /hip05-d02_3<span class="number">.16</span>.dtb
+}
+</code></pre><p><strong><em>Note: minilinux is the name of default PXE that will boot automatically.Image_3.16 is the name of kernel that locates on root directory of TFTP.hip05-d02_3.16.dtb is the name of dtb file that locates on root directory of TFTP.hulk-hip05.cpio.gz is the name of filesystem that locates on root diretory of TFTP.And you can change the names and locations.</em></strong></p>
+<h3 id="Boot_via_GRUB">Boot via GRUB</h3>
+<p>This part will tell you how to boot D02 via GRUB on SATA disk.In my case, SATA disk<br>will be partitioned into five parts:sda1(EFI part),sda2(ubuntu release),sda3(OpenSUSE release),sda4(miniDistribution),sda5(for user).</p>
+<p><1>Partition and format SATA disk<br>    Format SATA disk: mkfs -t ext4 /dev/sda<br>    Partition SATA disk as follow:<br>    +————-+—————-+———————+—————+<br>    | Name    |   Size    |    Type      |   Tag    |<br>    +————-+—————-+———————+—————+<br>    | sda1    |   200M    |  EFI system  |   EFI    |<br>    +————-+—————-+———————+—————+<br>    | sda2    |   10G     |    ext4      |          |<br>    +————-+—————-+———————+—————+<br>    | sda3    |   10G     |    ext4      |          |<br>    +————-+—————-+———————+—————+<br>    | sda4    |   10G     |    ext4      |          |<br>    +————-+—————-+———————+—————+<br>    | sda5    |rest space |    ext4      |   swap   |<br>    +————-+—————-+———————+—————+ </1></p>
+<p><2>Relative files are placed as follow:<br>    sda1: ———-EFI<br>          |       |<br>              |       ———archaa.efi<br>              |       |<br>          |       ———grub.cfg<br>              |<br>          |——————-Image_3.16<br>          |<br>          |——————-hip05-d02_3.16<br>          |<br>          |——————-Image_3.19<br>          |<br>          |——————-hip05-d02_3.19<br>    sda2: ubuntu distribution<br>     sda3: OpenSUSE distribution<br>    sda4: miniDistribution<br>    sda5: left for user<br><strong><em>Note:The names of grub files archaa.efi and grub.cfg can not be modified.</em></strong></2></p>
+<p><3>modify grub config file according to situation<br>This part we will build 6 different grub config.They are as follow:<br>    +—————-+—————-+————————+—————————+<br>    | boot name |  kernel   |  distribution  |  dtb file        |<br>    +—————-+—————-+————————+—————————+<br>    | ubuntu316 |Image_3.16 |     ubuntu     |hip05-d02_3.16.dtb|<br>    +—————-+—————-+————————+—————————+<br>    | ubuntu319 |Image_3.19 |     ubuntu     |hip05-d02_3.19.dtb|<br>    +—————-+—————-+————————+—————————+<br>    |opensuse316|Image_3.16 |    opensuse    |hip05-d02_3.16.dtb|<br>    +—————-+—————-+————————+—————————+<br>    |opensuse319|Image_3.19 |    opensuse    |hip05-d02_3.19.dtb|<br>    +—————-+—————-+————————+—————————+<br>    | mini316   |Image_3.16 |    mini        |hip05-d02_3.16.dtb|<br>    +—————-+—————-+————————+—————————+<br>    | mini319   |Image_3.19 |    mini        |hip05-d02_3.19.dtb|<br>    +—————-+—————-+————————+—————————+<br>And the context of grub.cfg file is as follow:</3></p>
+<pre><code><span class="comment">#</span>
+<span class="comment"># Sample GRUB configuration file</span>
+<span class="comment">#</span>
+<span class="comment"># Boot automatically after 0 secs.</span>
+set <span class="variable">timeout=</span><span class="number">5</span>
+<span class="comment"># By default, boot the Euler/Linux</span>
+set <span class="variable">default=</span>ubuntu316
+<span class="comment"># For booting GNU/Linux</span>
+menuentry <span class="string">"ubuntu-3.16"</span> --id ubuntu316 {
+set <span class="variable">root=</span>(hd1,gpt1)
+linux /Image_3.<span class="number">16</span> <span class="variable">rdinit=</span>/init <span class="variable">root=</span>/dev/sda2 <span class="variable">rootfstype=</span>ext4 rw <span class="variable">console=</span>ttyS0,<span class="number">115200</span> <span class="variable">earlycon=</span>uart8250,mmio32,<span class="number">0</span>x80300000
+devicetree /hip05-d02_3.<span class="number">16</span>.dtb
+}
+menuentry <span class="string">"ubuntu-3.19"</span> --id ubuntu319 {
+set <span class="variable">root=</span>(hd1,gpt1)
+linux /Image_3.<span class="number">19</span> <span class="variable">rdinit=</span>/init <span class="variable">root=</span>/dev/sda2 <span class="variable">rootfstype=</span>ext4 rw <span class="variable">console=</span>ttyS0,<span class="number">115200</span> <span class="variable">earlycon=</span>uart8250,mmio32,<span class="number">0</span>x80300000
+devicetree /hip05-d02_3.<span class="number">19</span>.dtb
+}
+menuentry <span class="string">"opensuse-3.16"</span> --id opensuse316 {
+set <span class="variable">root=</span>(hd1,gpt1)
+linux /Image_3.<span class="number">16</span> <span class="variable">rdinit=</span>/init <span class="variable">root=</span>/dev/sda3 <span class="variable">rootfstype=</span>ext4 rw <span class="variable">console=</span>ttyS0,<span class="number">115200</span> <span class="variable">earlycon=</span>uart8250,mmio32,<span class="number">0</span>x80300000
+devicetree /hip05-d02_3.<span class="number">16</span>.dtb
+}
+menuentry <span class="string">"opensuse-3.19"</span> --id opensuse319 {
+set <span class="variable">root=</span>(hd1,gpt1)
+linux /Image_3.<span class="number">19</span> <span class="variable">rdinit=</span>/init <span class="variable">root=</span>/dev/sda3 <span class="variable">rootfstype=</span>ext4 rw <span class="variable">console=</span>ttyS0,<span class="number">115200</span> <span class="variable">earlycon=</span>uart8250,mmio32,<span class="number">0</span>x80300000
+devicetree /hip05-d02_3.<span class="number">19</span>.dtb
+}
+menuentry <span class="string">"mini-3.16"</span> --id mini316 {
+set <span class="variable">root=</span>(hd1,gpt1)
+linux /Image_3.<span class="number">16</span> <span class="variable">rdinit=</span>/init <span class="variable">root=</span>/dev/sda4 <span class="variable">rootfstype=</span>ext4 rw <span class="variable">console=</span>ttyS0,<span class="number">115200</span> <span class="variable">earlycon=</span>uart8250,mmio32,<span class="number">0</span>x80300000
+devicetree /hip05-d02_3.<span class="number">16</span>.dtb
+}
+menuentry <span class="string">"mini-3.19"</span> --id mini319 {
+set <span class="variable">root=</span>(hd1,gpt1)
+linux /Image_3.<span class="number">19</span> <span class="variable">rdinit=</span>/init <span class="variable">root=</span>/dev/sda4 <span class="variable">rootfstype=</span>ext4 rw <span class="variable">console=</span>ttyS0,<span class="number">115200</span> <span class="variable">earlycon=</span>uart8250,mmio32,<span class="number">0</span>x80300000
+devicetree /hip05-d02_3.<span class="number">19</span>.dtb
+}
+</code></pre><p><strong><em>Note:If you only want to boot D02 from one kernel and a distribution,one menuentry is left as above.</em></strong></p>
+<p><4>Reboot and enter UEFI menu</4></p>
+<p><5>Select boot from HD</5></p>
+<p><6>Type arrow key up and down to select grub boot menu to decise which kernel and<br>distribution to boot</6></p>
+<h3 id="Boot_via_ACPI">Boot via ACPI</h3>
+<p>D02 also supports booting via ACPI,and the steps are as follows:</p>
+<p><1>Power on and enter UEFI SHELL</1></p>
+<p><2>IP address config</2></p>
+<pre><code><span class="title">ifconfig</span> -s eth0 [IP.address] [mask] [gateway]
+eg. ifconfig -s eth0 <span class="number">192.168.1.102</span> <span class="number">255.255.255.0</span> <span class="number">192.168.1.1</span>
+</code></pre><p><3>Burn the kernel from FTP</3></p>
+<pre><code><span class="tag">provision</span> <span class="attr_selector">[server.address]</span> <span class="tag">-u</span> <span class="attr_selector">[user.name]</span> <span class="tag">-p</span> <span class="attr_selector">[passwd]</span> <span class="tag">-f</span> <span class="attr_selector">[kernel]</span> <span class="tag">-a</span> <span class="attr_selector">[address1]</span>
+<span class="tag">mdfile</span> \<span class="attr_selector">[kernel]</span> <span class="attr_selector">[address1]</span> <span class="attr_selector">[address2]</span>
+<span class="tag">eg</span>. <span class="tag">provision</span> 192<span class="class">.168</span><span class="class">.1</span><span class="class">.112</span> <span class="tag">-u</span> <span class="tag">d02</span> <span class="tag">-p</span> 123456 <span class="tag">-f</span> <span class="tag">Image</span> <span class="tag">-a</span> 0<span class="tag">x80000</span>
+    <span class="tag">mdfile</span> \<span class="tag">Image</span> 0<span class="tag">x80000</span> 0<span class="tag">x82A000</span>
+</code></pre><p><strong><em>Note:address2 is the real Image size which can be got from above command.</em></strong></p>
+<p><4>Burn the filesystem from FTP</4></p>
+<pre><code><span class="tag">provision</span> <span class="attr_selector">[server.address]</span> <span class="tag">-u</span> <span class="attr_selector">[user.name]</span> <span class="tag">-p</span> <span class="attr_selector">[passwd]</span> <span class="tag">-f</span> <span class="attr_selector">[filesystem.cpio.gz]</span> <span class="tag">-a</span> <span class="attr_selector">[address3]</span>
+<span class="tag">mdfile</span> \<span class="attr_selector">[filesystem.cpio.gz [address3]</span> <span class="attr_selector">[address4]</span>
+<span class="tag">eg</span>. <span class="tag">provision</span> 192<span class="class">.168</span><span class="class">.1</span><span class="class">.112</span> <span class="tag">-u</span> <span class="tag">d02</span> <span class="tag">-p</span> 123456 <span class="tag">-f</span> <span class="tag">hulk-hip05</span><span class="class">.cpio</span><span class="class">.gz</span> <span class="tag">-a</span> 0<span class="tag">x7000000</span>
+    <span class="tag">mdfile</span> \<span class="tag">hulk-hip05</span><span class="class">.cpio</span><span class="class">.gz</span> 0<span class="tag">x7000000</span> 0<span class="tag">x1845F12</span>
+</code></pre><p><strong><em>Note:address4 is the real Image size which can be got from above command.</em></strong></p>
+<p><5>Get into directory to check whether boot via ACPI is done</5></p>
+<pre><code><span class="keyword">cd</span> fs0:
+<span class="keyword">dir</span>
+</code></pre><p><6>Set the parameters of booting via ACPI</6></p>
+<pre><code>start <span class="keyword">Image</span> <span class="string">"acpi=fore console=ttyS0,115200 earlycon=uart8250,mmio32,0x80300000 initrd=hulk-hip05.cpio.gz"</span>
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/02/11/D02_1/" data-id="0pob9t0bb2yhisa0" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/02/11/hello-world/" class="article-date">
+  <time datetime="2015-02-11T02:25:36.000Z" itemprop="datePublished">Feb 11 2015</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/02/11/hello-world/">Hello World</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">trobuleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<h1 id="This_is_the_first_blog">This is the first blog</h1>
+<h2 id="Quick_Start">Quick Start</h2>
+<h3 id="Create_a_new_post">Create a new post</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+
+<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run_server">Run server</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
+
+<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate_static_files">Generate static files</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
+
+<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
+
+<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/02/11/hello-world/" data-id="gtxf9bhw75sr5o1t" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+  
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2015/02/11/D02_1/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2015/02/11/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+
+  </div>
+</body>
+</html>
