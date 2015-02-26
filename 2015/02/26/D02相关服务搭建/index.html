@@ -64,7 +64,7 @@
         <section id="main"><article id="post-D02相关服务搭建" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/02/26/D02相关服务搭建/" class="article-date">
-  <time datetime="2015-02-26T03:20:44.000Z" itemprop="datePublished">Feb 26 2015</time>
+  <time datetime="2015-02-26T08:26:39.000Z" itemprop="datePublished">Feb 26 2015</time>
 </a>
     
   </div>
@@ -74,7 +74,9 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>本文档所要搭建的D02相关的服务是基于UBUNTU14.04,对于其它系统平台的对应服务不在本文档涉及范围内.<br><a id="more"></a></p>
-<h3 id="1、FTP服务的搭建">1、FTP服务的搭建</h3>
+<h2 id="Overview">Overview</h2>
+<p><a href="#FTP">1、FTP服务的搭建</a><br><a href="#TFTP">2、TFTP服务的搭建</a><br><a href="#DHCP">3、DHCP服务的搭建</a><br><a href="#NFS">4、NFS服务的搭建</a></p>
+<h3 id="1、FTP服务的搭建"><span id="FTP">1、FTP服务的搭建</span></h3>
 <p>(1)安装VSFTPD服务</p>
 <pre><code><span class="built_in">sudo</span> apt-get install vsftpd
 </code></pre><p>(2)添加修改配置文件<strong><em>/etc/vsftpd.conf</em></strong></p>
@@ -84,7 +86,7 @@
 </code></pre><p><strong><em>注意:允许访问的用户名需要放置于文件allowed_users内</em></strong><br>(3)重启服务</p>
 <pre><code><span class="built_in">sudo</span> service vsftpd restart
 </code></pre><p>(4)验证服务<br>在浏览器中输入所搭建的VSFTPD服务的所在主机的IP地址,并根据提示输入用户名和密码,如果能够正常进入表示服务安装正常,否则服务安装存在问题.如在浏览器中输入ftp://192.168.2.4,并输入用户名chenxiang和用户密码123456.</p>
-<h3 id="2、TFTP服务的搭建">2、TFTP服务的搭建</h3>
+<h3 id="2、TFTP服务的搭建"><span id="TFTP">2、TFTP服务的搭建</span></h3>
 <p>(1)安装服务</p>
 <pre><code><span class="built_in">sudo</span> apt-get install tftpd-hpa tftp-hpa
 </code></pre><p>(2)修改配置文件<strong><em>/etc/default/tftpd-hpa</em></strong></p>
@@ -99,7 +101,7 @@
 <span class="built_in">get</span> xxx
 <span class="keyword">put</span> xxx
 </code></pre><p><strong><em>其中get表示从TFTP主目录中获取文件xxxx,put表示向TFTP主目录传输文件xxx</em></strong></p>
-<h3 id="3、DHCP服务的搭建">3、DHCP服务的搭建</h3>
+<h3 id="3、DHCP服务的搭建"><span id="DHCP">3、DHCP服务的搭建</span></h3>
 <p>(1)安装DHCP服务</p>
 <pre><code>sudo apt-get <span class="operator"><span class="keyword">install</span> isc-dhcp-<span class="keyword">server</span></span>
 </code></pre><p>(2)修改编辑配置文件<strong><em>/etc/dhcp/dhcpd.conf</em></strong></p>
@@ -110,6 +112,21 @@
 </code></pre><p>(4)重启服务</p>
 <pre><code><span class="built_in">sudo</span> service isc-dhcp-server status
 <span class="built_in">sudo</span> service isc-dhcp-server restart
+</code></pre><h3 id="4、NFS服务的搭建"><span id="NFS">4、NFS服务的搭建</span></h3>
+<p>(1)NFS安装</p>
+<pre><code>sudo apt-get <span class="operator"><span class="keyword">install</span> nfs-kernel-<span class="keyword">server</span> nfs-common portmap</span>
+</code></pre><p>(2)NFS配置文件修改/etc/exports<br>在配置文件末尾添加如下内容:</p>
+<pre><code>/rootnfs *(rw,<span class="keyword">sync</span>,no_root_squash)
+</code></pre><p>其中/rootnfs为要共享的目录,*代表允许所有的网络段访问,rw为可读写权限,sync是资料同步写入内存和硬盘,no_root_squash是nfs客户端分享目录使用者的权限,如果客户端使用的是root用户，那么对于该共享目录而言，该客户端就具有root权限.<br>(3)重启服务</p>
+<pre><code><span class="built_in">sudo</span> service nfs-kernel-server restart
+</code></pre><p>(4)验证服务<br>a.显示出共享出来的目录</p>
+<pre><code>showmount <span class="operator">-e</span>
+</code></pre><p>b.将nfs的rootnfs目录挂载到本地磁盘上</p>
+<pre><code><span class="title">sudo</span> mount -t nfs <span class="url">localhost:/rootnfs</span> /mnt
+</code></pre><p>c.查看挂载情况</p>
+<pre><code>df
+</code></pre><p>d.卸载挂载</p>
+<pre><code><span class="built_in">sudo</span> umount /mnt
 </code></pre>
       
     </div>
@@ -122,6 +139,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2015/02/26/D02_20150226/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
   
   
     <a href="/2015/02/16/cpio_filesystem/" id="article-nav-older" class="article-nav-link-wrap">
@@ -160,15 +186,15 @@
       <ul>
         
           <li>
+            <a href="/2015/02/26/D02_20150226/">(no title)</a>
+          </li>
+        
+          <li>
             <a href="/2015/02/26/D02相关服务搭建/">(no title)</a>
           </li>
         
           <li>
             <a href="/2015/02/16/cpio_filesystem/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2015/02/15/D02_20150215/">(no title)</a>
           </li>
         
       </ul>

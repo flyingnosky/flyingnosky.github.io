@@ -63,73 +63,10 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-D02相关服务搭建" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-D02_20150226" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/02/26/D02相关服务搭建/" class="article-date">
-  <time datetime="2015-02-26T03:20:44.000Z" itemprop="datePublished">Feb 26 2015</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>本文档所要搭建的D02相关的服务是基于UBUNTU14.04,对于其它系统平台的对应服务不在本文档涉及范围内.<br>
-        
-          <p class="article-more-link">
-            <a href="/2015/02/26/D02相关服务搭建/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/02/26/D02相关服务搭建/" data-id="n69c0v5ifvqsdfxo" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-cpio_filesystem" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/02/16/cpio_filesystem/" class="article-date">
-  <time datetime="2015-02-16T08:06:26.000Z" itemprop="datePublished">Feb 16 2015</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="How_To_Add_Services_Into_cpio_Filesystem_To_Make_Cpu_and_Memory_High_Load">How To Add Services Into cpio Filesystem To Make Cpu and Memory High Load</h2>
-<p>Sometimes some performances of D02 board should be tested under high cpu and memory load, so we can add some stress services into filesystem to realize the requirements. In my case, we already have cpio filesystem hulk-hip05.cpio.gz and stress service will be added into cpio filesystem as following steps.<br>
-        
-          <p class="article-more-link">
-            <a href="/2015/02/16/cpio_filesystem/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/02/16/cpio_filesystem/" data-id="tbxap7tm5x69lw22" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-D02_20150215" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/02/15/D02_20150215/" class="article-date">
-  <time datetime="2015-02-15T03:25:12.000Z" itemprop="datePublished">Feb 15 2015</time>
+    <a href="/2015/02/26/D02_20150226/" class="article-date">
+  <time datetime="2015-02-26T08:26:41.000Z" itemprop="datePublished">Feb 26 2015</time>
 </a>
     
   </div>
@@ -279,7 +216,7 @@ eg. provision <span class="number">192.168</span>.<span class="number">10.102</s
 <p><1>Download kernel source code from above section</1></p>
 <p><2>Setting envirnment from compiling D02 as above</2></p>
 <p><3>Build steps as follow:</3></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> ARCH=arm64</div><div class="line"><span class="keyword">export</span> CROSS_COMPILE=aarch64-linux-gnu-</div><div class="line">make hulk_defconfig</div><div class="line">make -j16</div><div class="line">make ./hisilicon/hip05<span class="operator">-d</span>02.dtb</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> ARCH=arm64</div><div class="line"><span class="keyword">export</span> CROSS_COMPILE=aarch64-linux-gnu-</div><div class="line">make defconfig</div><div class="line">make -j16</div><div class="line">make ./hisilicon/hip05<span class="operator">-d</span>02.dtb</div></pre></td></tr></table></figure>
 
 <p>Then there are two files that have been created:Image in the directory <strong>arch/arm64/boot/</strong>, and hip05-d02.dtb in the directory <strong>arch/arm64/boot/dts/hisilicon</strong></p>
 <h3 id="Boot_via_NAND"><span id="NAND">Boot via NAND</span></h3>
@@ -476,7 +413,70 @@ eg. ifconfig -s eth0 <span class="number">192.168.1.102</span> <span class="numb
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/02/15/D02_20150215/" data-id="5kxndwz24h5nmeln" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/02/26/D02_20150226/" data-id="hxuhbmi580lwivo2" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-D02相关服务搭建" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/02/26/D02相关服务搭建/" class="article-date">
+  <time datetime="2015-02-26T08:26:39.000Z" itemprop="datePublished">Feb 26 2015</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>本文档所要搭建的D02相关的服务是基于UBUNTU14.04,对于其它系统平台的对应服务不在本文档涉及范围内.<br>
+        
+          <p class="article-more-link">
+            <a href="/2015/02/26/D02相关服务搭建/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/02/26/D02相关服务搭建/" data-id="n69c0v5ifvqsdfxo" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-cpio_filesystem" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/02/16/cpio_filesystem/" class="article-date">
+  <time datetime="2015-02-16T08:06:26.000Z" itemprop="datePublished">Feb 16 2015</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="How_To_Add_Services_Into_cpio_Filesystem_To_Make_Cpu_and_Memory_High_Load">How To Add Services Into cpio Filesystem To Make Cpu and Memory High Load</h2>
+<p>Sometimes some performances of D02 board should be tested under high cpu and memory load, so we can add some stress services into filesystem to realize the requirements. In my case, we already have cpio filesystem hulk-hip05.cpio.gz and stress service will be added into cpio filesystem as following steps.<br>
+        
+          <p class="article-more-link">
+            <a href="/2015/02/16/cpio_filesystem/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/02/16/cpio_filesystem/" data-id="tbxap7tm5x69lw22" class="article-share-link">Share</a>
       
       
     </footer>
@@ -513,15 +513,15 @@ eg. ifconfig -s eth0 <span class="number">192.168.1.102</span> <span class="numb
       <ul>
         
           <li>
+            <a href="/2015/02/26/D02_20150226/">(no title)</a>
+          </li>
+        
+          <li>
             <a href="/2015/02/26/D02相关服务搭建/">(no title)</a>
           </li>
         
           <li>
             <a href="/2015/02/16/cpio_filesystem/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2015/02/15/D02_20150215/">(no title)</a>
           </li>
         
       </ul>
