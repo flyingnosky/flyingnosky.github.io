@@ -3,17 +3,20 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Archives: 2015/2 | flyingnosky</title>
+  <title>flyingnosky</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
-<meta property="og:type" content="website">
+  <meta name="description" content="How to login in the filesystem when you don’t know password
+This document describes how to solve the situation that you don’t know the name and password when you login in the filesystem OPENSUSE or UB">
+<meta property="og:type" content="article">
 <meta property="og:title" content="flyingnosky">
-<meta property="og:url" content="http://yoursite.com/archives/2015/02/">
+<meta property="og:url" content="http://yoursite.com/2015/02/26/opensuse_passwd/">
 <meta property="og:site_name" content="flyingnosky">
-<meta property="og:description">
+<meta property="og:description" content="How to login in the filesystem when you don’t know password
+This document describes how to solve the situation that you don’t know the name and password when you login in the filesystem OPENSUSE or UB">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="flyingnosky">
-<meta name="twitter:description">
+<meta name="twitter:description" content="How to login in the filesystem when you don’t know password
+This document describes how to solve the situation that you don’t know the name and password when you login in the filesystem OPENSUSE or UB">
 
   
     <link rel="alternative" href="/atom.xml" title="flyingnosky" type="application/atom+xml">
@@ -61,9 +64,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-opensuse_passwd" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-opensuse_passwd" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/02/26/opensuse_passwd/" class="article-date">
   <time datetime="2015-02-26T12:45:22.000Z" itemprop="datePublished">Feb 26 2015</time>
@@ -76,12 +77,21 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="How_to_login_in_the_filesystem_when_you_don’t_know_password">How to login in the filesystem when you don’t know password</h2>
-<p>This document describes how to solve the situation that you don’t know the name and password when you login in the filesystem OPENSUSE or UBUNTU.In my case, the situation may as follow:<br>
-        
-          <p class="article-more-link">
-            <a href="/2015/02/26/opensuse_passwd/#more">Read More</a>
-          </p>
-        
+<p>This document describes how to solve the situation that you don’t know the name and password when you login in the filesystem OPENSUSE or UBUNTU.In my case, the situation may as follow:<br><a id="more"></a></p>
+<ol>
+<li><p>Login any system you can login, and set the root user a password.<br>For example, login in my desktop ubuntu and set the password for root user.</p>
+<p> password root</p>
+</li>
+</ol>
+<p>And then type the password. In my case, root users’ password is 123456.<br>2.Copy information related to password in my desktop ubuntu, and this information in the file /etc/shadow</p>
+<pre><code>cat /etc/shadow
+root:$<span class="number">6</span>$HqBYywyR$79C/NySRrPshy8wXFcwHleJ1wHHjjGuQQKm0V2uyLYWXobGUSKbz3Nc5SMhs5VVTMmNpxZYIYlVm8W7Q86n1m1:<span class="number">16479</span>:<span class="number">0</span>:<span class="number">99999</span>:<span class="number">7</span>:::
+daemon:*:<span class="number">16177</span>:<span class="number">0</span>:<span class="number">99999</span>:<span class="number">7</span>:::
+bin:*:<span class="number">16177</span>:<span class="number">0</span>:<span class="number">99999</span>:<span class="number">7</span>:::
+sys:*:<span class="number">16177</span>:<span class="number">0</span>:<span class="number">99999</span>:<span class="number">7</span>:::
+<span class="keyword">...</span>
+</code></pre><p>What we should do is copying the first line related to root user.<br>3.Paste the content to corresponding place in the filesystem you don’t know the password. In my case the filesystem is OPENSUSE13.1. \Edit the file /etc/shadow IN <strong><em>opensuse13.1</em></strong>,and replace the first line with the content.<br>Then the root user’s password will be 123456 in the system opensuse13.1.</p>
+
       
     </div>
     <footer class="article-footer">
@@ -91,74 +101,29 @@
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-D02相关服务搭建" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/02/26/D02相关服务搭建/" class="article-date">
-  <time datetime="2015-02-26T08:26:39.000Z" itemprop="datePublished">Feb 26 2015</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>本文档所要搭建的D02相关的服务是基于UBUNTU14.04,对于其它系统平台的对应服务不在本文档涉及范围内.<br>
+    <a href="/2015/03/02/D02_20150226/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
         
-          <p class="article-more-link">
-            <a href="/2015/02/26/D02相关服务搭建/#more">Read More</a>
-          </p>
+          (no title)
         
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/02/26/D02相关服务搭建/" data-id="n69c0v5ifvqsdfxo" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
+      </div>
+    </a>
+  
+  
+    <a href="/2015/02/26/D02相关服务搭建/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
   
 </article>
 
-
-  
-    <article id="post-cpio_filesystem" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/02/16/cpio_filesystem/" class="article-date">
-  <time datetime="2015-02-16T08:06:26.000Z" itemprop="datePublished">Feb 16 2015</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="How_To_Add_Services_Into_cpio_Filesystem_To_Make_Cpu_and_Memory_High_Load">How To Add Services Into cpio Filesystem To Make Cpu and Memory High Load</h2>
-<p>Sometimes some performances of D02 board should be tested under high cpu and memory load, so we can add some stress services into filesystem to realize the requirements. In my case, we already have cpio filesystem hulk-hip05.cpio.gz and stress service will be added into cpio filesystem as following steps.<br>
-        
-          <p class="article-more-link">
-            <a href="/2015/02/16/cpio_filesystem/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/02/16/cpio_filesystem/" data-id="tbxap7tm5x69lw22" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-  
 </section>
         
           <aside id="sidebar">

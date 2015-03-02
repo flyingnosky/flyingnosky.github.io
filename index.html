@@ -65,8 +65,8 @@
   
     <article id="post-D02_20150226" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/02/26/D02_20150226/" class="article-date">
-  <time datetime="2015-02-26T08:26:41.000Z" itemprop="datePublished">Feb 26 2015</time>
+    <a href="/2015/03/02/D02_20150226/" class="article-date">
+  <time datetime="2015-03-02T06:16:05.000Z" itemprop="datePublished">Mar 2 2015</time>
 </a>
     
   </div>
@@ -97,11 +97,12 @@
 <li><a href="#PXE">Boot via PXE</a></li>
 <li><a href="#SATA">Boot via SATA</a></li>
 <li><a href="#ACPI">Boot via ACPI</a></li>
+<li><a href="#NFS">Boot via NFS</a></li>
 </ul>
 </li>
 </ul>
 <h2 id="D02_Board_Hardware_Features"><span id="hardware">D02 Board Hardware Features</span></h2>
-<p>Major hardware features of D02 are listed as follow:<br>    <img src="/img/hardware.png" alt=""></p>
+<p>Major hardware features of D02 are listed as follow:<br>    <img src="/img/hardware.png" alt=""><br>The structure picture of D02 is as follow:<br>        <img src="/img/d02_structure.jpg" alt=""></p>
 <h3 id="The_Architecture_of_D02"><span id="architure">The Architecture of D02</span></h3>
 <p>The software architecture on D02 is consistented of UEFI,GRUB,Kernel,Distribution and Toolchain.The architecture of D02 is as follow:</p>
 <pre><code>+-----------------------++------+
@@ -409,11 +410,57 @@ eg. ifconfig -s eth0 <span class="number">192.168.1.102</span> <span class="numb
 <span class="keyword">dir</span>
 </code></pre><p><6>Set the parameters of booting via ACPI</6></p>
 <pre><code>start <span class="keyword">Image</span> <span class="string">"acpi=fore console=ttyS0,115200 earlycon=uart8250,mmio32,0x80300000 initrd=hulk-hip05.cpio.gz"</span>
-</code></pre>
+</code></pre><h3 id="Boot_via_NFS"><span id="NFS">Boot via NFS</span></h3>
+<p>D02 supports booting via NFS, and before this step you should make sure that NFS service has been installed.</p>
+<p><1>Setup NFS service on ubuntu<br>a.Install NFS service package</1></p>
+<pre><code>sudo apt-get <span class="operator"><span class="keyword">install</span> nfs-kernel-<span class="keyword">server</span> nfs-common portmap</span>
+</code></pre><p>b.Modify configure file /etc/exports<br>Add contents at the end of this file as follows:</p>
+<pre><code>/rootnfs *(rw,<span class="keyword">sync</span>,no_root_squash)
+</code></pre><p><strong><em>Note:/rootnfs is the shared directory of nfs.</em></strong><br>c.Restart nfs service </p>
+<pre><code><span class="built_in">sudo</span> service nfs-kernel-server restart
+</code></pre><p><2>Modify grub config file grub.cfg according to situation</2></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">set <span class="variable">timeout=</span><span class="number">0</span></div><div class="line">set <span class="variable">default=</span>nfsboot</div><div class="line">menuentry <span class="string">"nfs-boot"</span> --id nfsboot {</div><div class="line">        set <span class="variable">root=</span>(tftp,<span class="number">192.168</span>.<span class="number">2.4</span>)</div><div class="line">        linux /Image <span class="variable">rdinit=</span>/init <span class="variable">console=</span>ttyS0,<span class="number">115200</span> <span class="variable">earlycon=</span>uart8250,mmio32,<span class="number">0</span>x80300000 <span class="variable">root=</span>/dev/nfs rw <span class="variable">nfsroot=</span><span class="number">192.168</span>.<span class="number">2.4</span>:/home/chenxiang/nfs <span class="variable">ip=</span>dhcp</div><div class="line">        devicetree /hip05-d02.dtb</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>Note:Image is the kernel , and hip05-d02 is the dtb file. And the filesystem locates on <strong><em>192.168.2.4:/home/chenxiang/nfs</em></strong></p>
+<p><3>Reboot D02 and enter UEFI menu.</3></p>
+<p><4>Select item 2: PXE on MAC Address.</4></p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/02/26/D02_20150226/" data-id="hxuhbmi580lwivo2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/03/02/D02_20150226/" data-id="hxuhbmi580lwivo2" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-opensuse_passwd" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/02/26/opensuse_passwd/" class="article-date">
+  <time datetime="2015-02-26T12:45:22.000Z" itemprop="datePublished">Feb 26 2015</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="How_to_login_in_the_filesystem_when_you_don’t_know_password">How to login in the filesystem when you don’t know password</h2>
+<p>This document describes how to solve the situation that you don’t know the name and password when you login in the filesystem OPENSUSE or UBUNTU.In my case, the situation may as follow:<br>
+        
+          <p class="article-more-link">
+            <a href="/2015/02/26/opensuse_passwd/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/02/26/opensuse_passwd/" data-id="0c0hk3jr6mq4bzog" class="article-share-link">Share</a>
       
       
     </footer>
@@ -501,7 +548,7 @@ eg. ifconfig -s eth0 <span class="number">192.168.1.102</span> <span class="numb
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">3</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -513,7 +560,11 @@ eg. ifconfig -s eth0 <span class="number">192.168.1.102</span> <span class="numb
       <ul>
         
           <li>
-            <a href="/2015/02/26/D02_20150226/">(no title)</a>
+            <a href="/2015/03/02/D02_20150226/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2015/02/26/opensuse_passwd/">(no title)</a>
           </li>
         
           <li>
