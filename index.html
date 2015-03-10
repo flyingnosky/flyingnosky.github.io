@@ -63,10 +63,64 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-D02_20150226" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-samba" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/03/02/D02_20150226/" class="article-date">
-  <time datetime="2015-03-02T06:16:05.000Z" itemprop="datePublished">Mar 2 2015</time>
+    <a href="/2015/03/10/samba/" class="article-date">
+  <time datetime="2015-03-10T00:57:13.000Z" itemprop="datePublished">Mar 10 2015</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="vm_ubuntu14-04_samba">vm ubuntu14.04 samba</h2>
+<h3 id="1-Install_service_samba">1.Install service samba</h3>
+<pre><code><span class="built_in">sudo</span> apt-get install samba
+</code></pre><h3 id="2-Create_share_directory_/home/shawn/samba_share">2.Create share directory /home/shawn/samba_share</h3>
+<pre><code><span class="keyword">mkdir</span> -p /home/shawn/samba_share
+<span class="keyword">chmod</span> <span class="number">777</span> /home/shawn/samba_share
+</code></pre><h3 id="3-modify_samba_configure_file_/etc/samba/smb-conf">3.modify samba configure file /etc/samba/smb.conf</h3>
+<p>a.Modify this content as follows:</p>
+<pre><code><span class="variable">security =</span> user
+username <span class="variable">map =</span> /etc/samba/smbusers
+</code></pre><p>b.Add follow content to avoid wrong decode</p>
+<pre><code> <span class="variable">workgroup =</span> workgroup
+display <span class="variable">charset =</span> UTF-<span class="number">8</span>
+unix <span class="variable">charset =</span> UTF-<span class="number">8</span>
+dos <span class="variable">charset =</span> cp936
+</code></pre><p>c.Add follow part to allow shawn to access:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">[Share]</div><div class="line"><span class="variable">comment =</span> Shared Folder <span class="keyword">with</span> username <span class="constant">and</span> password </div><div class="line"><span class="variable">path =</span> /home/shawn/samba_share</div><div class="line"> <span class="comment"># public = yes </span></div><div class="line"><span class="variable">writable =</span> yes</div><div class="line"><span class="comment"># readyonly =  yes </span></div><div class="line">valid <span class="variable">users =</span> shawn</div><div class="line">create <span class="variable">mask =</span> <span class="number">0700</span></div><div class="line">directory <span class="variable">mask =</span> <span class="number">0700</span></div><div class="line">force <span class="variable">user =</span> nobody</div><div class="line">force <span class="variable">group =</span> nogroup</div><div class="line"><span class="variable">available =</span> yes</div><div class="line"><span class="variable">browseable =</span> yes</div></pre></td></tr></table></figure>
+
+<p>d.Add smaba user shawn and password</p>
+<pre><code><span class="built_in">sudo</span> user add shawn
+<span class="built_in">sudo</span> smbpasswd <span class="operator">-a</span> shawn
+</code></pre><p>e.Add network user at /etc/samba/smbusers</p>
+<pre><code><span class="variable">shawn =</span> <span class="string">"network username"</span>
+</code></pre><p>f.Restart service </p>
+<pre><code><span class="built_in">sudo</span> service smbd restart
+<span class="built_in">sudo</span> service nmbd restart
+</code></pre><h3 id="4-verify_service_samba">4.verify service samba</h3>
+<p>It is very easy to verify service samba between windowns and ubuntu, and what you should to do is to open command windowns with WIN+r.Then type ubuntu’s IP address.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/03/10/samba/" data-id="nztdnspjvnmqypm2" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-D02_20150302" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/03/02/D02_20150302/" class="article-date">
+  <time datetime="2015-03-02T06:18:52.000Z" itemprop="datePublished">Mar 2 2015</time>
 </a>
     
   </div>
@@ -428,7 +482,7 @@ eg. ifconfig -s eth0 <span class="number">192.168.1.102</span> <span class="numb
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/03/02/D02_20150226/" data-id="hxuhbmi580lwivo2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/03/02/D02_20150302/" data-id="9s2fv0siizgiebv3" class="article-share-link">Share</a>
       
       
     </footer>
@@ -548,7 +602,7 @@ eg. ifconfig -s eth0 <span class="number">192.168.1.102</span> <span class="numb
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">3</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -560,7 +614,11 @@ eg. ifconfig -s eth0 <span class="number">192.168.1.102</span> <span class="numb
       <ul>
         
           <li>
-            <a href="/2015/03/02/D02_20150226/">(no title)</a>
+            <a href="/2015/03/10/samba/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2015/03/02/D02_20150302/">(no title)</a>
           </li>
         
           <li>
