@@ -3,17 +3,26 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Archives: 2015/2 | flyingnosky</title>
+  <title>flyingnosky</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
-<meta property="og:type" content="website">
+  <meta name="description" content="This document shows how to compress and uncompress all kinds of compression files under linux.
+1.Format of tar
+compression : tar cvf FileName.tar DirNamedecompression : tar xvf FileName.tar
+2.Format o">
+<meta property="og:type" content="article">
 <meta property="og:title" content="flyingnosky">
-<meta property="og:url" content="http://yoursite.com/archives/2015/02/">
+<meta property="og:url" content="http://yoursite.com/2015/03/20/uncompression under linux/">
 <meta property="og:site_name" content="flyingnosky">
-<meta property="og:description">
+<meta property="og:description" content="This document shows how to compress and uncompress all kinds of compression files under linux.
+1.Format of tar
+compression : tar cvf FileName.tar DirNamedecompression : tar xvf FileName.tar
+2.Format o">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="flyingnosky">
-<meta name="twitter:description">
+<meta name="twitter:description" content="This document shows how to compress and uncompress all kinds of compression files under linux.
+1.Format of tar
+compression : tar cvf FileName.tar DirNamedecompression : tar xvf FileName.tar
+2.Format o">
 
   
     <link rel="alternative" href="/atom.xml" title="flyingnosky" type="application/atom+xml">
@@ -61,12 +70,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-opensuse_passwd" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-uncompression under linux" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/02/26/opensuse_passwd/" class="article-date">
-  <time datetime="2015-02-26T12:45:22.000Z" itemprop="datePublished">Feb 26 2015</time>
+    <a href="/2015/03/20/uncompression under linux/" class="article-date">
+  <time datetime="2015-03-20T04:02:44.000Z" itemprop="datePublished">Mar 20 2015</time>
 </a>
     
   </div>
@@ -75,90 +82,48 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="How_to_login_in_the_filesystem_when_you_don’t_know_password">How to login in the filesystem when you don’t know password</h2>
-<p>This document describes how to solve the situation that you don’t know the name and password when you login in the filesystem OPENSUSE or UBUNTU.In my case, the situation may as follow:<br>
-        
-          <p class="article-more-link">
-            <a href="/2015/02/26/opensuse_passwd/#more">Read More</a>
-          </p>
-        
+        <p>This document shows how to compress and uncompress all kinds of compression files under linux.</p>
+<h3 id="1-Format_of_tar">1.Format of tar</h3>
+<p>compression : tar cvf FileName.tar DirName<br>decompression : tar xvf FileName.tar</p>
+<h3 id="2-Format_of_gz">2.Format of gz</h3>
+<p>compression : gzip FileName<br>decompression : gzip -d FileName<br>        gunzip FileName</p>
+<h3 id="3-Format_of_tar-gz">3.Format of tar.gz</h3>
+<p>compression : tar zcvf FileName.tar.gz DirName<br>decompression : gzip -d FileName.tar.gz<br>        tar xvf FileName.tar</p>
+<h3 id="4-Format_of_-bz2">4.Format of .bz2</h3>
+<p>compression : bzip2 -z DirName<br>decompression : bzip2 -d FileName.bz2<br>        or bunzip2 FileName.bz2</p>
+<h3 id="5-Format_of_tar-bz2">5.Format of tar.bz2</h3>
+<p>compression : tar jcvf FileName.tar.bz2 DirName<br>decompresson : tar jxvf FileName.tar.bz2</p>
+<h3 id="6-Format_of_bz">6.Format of bz</h3>
+<p>compression : bzip2自动创建bz2格式文件,无法创建bz格式<br>decompression : bzip2 -d FileName.bz<br>            bunzip2 FileName.bz</p>
+<h3 id="7-Format_of_tar-bz">7.Format of tar.bz</h3>
+<p>compression : 同上<br>decompression : tar jxvf FileName.tar.bz</p>
+<h3 id="8-Format_of_tar-xz">8.Format of tar.xz</h3>
+<p>compression : tar -cvf FileName.tar DirName &amp;&amp; xz -z FileName.tar<br>         or tar -Jcvf FileName.tar.xz DirName<br>decompression : xz -d FileName.tar.xz &amp;&amp; tar -xvf FileName.tar<br>        tar -Jxvf FileName.tar.xz</p>
+<p><a href="http://rogerdudler.github.io/git-guide/index.zh.html" target="_blank" rel="external">http://rogerdudler.github.io/git-guide/index.zh.html</a></p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/02/26/opensuse_passwd/" data-id="0c0hk3jr6mq4bzog" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/03/20/uncompression under linux/" data-id="h10iz5cwht5k8qw3" class="article-share-link">Share</a>
       
       
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-D02相关服务搭建" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/02/26/D02相关服务搭建/" class="article-date">
-  <time datetime="2015-02-26T08:26:39.000Z" itemprop="datePublished">Feb 26 2015</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>本文档所要搭建的D02相关的服务是基于UBUNTU14.04,对于其它系统平台的对应服务不在本文档涉及范围内.<br>
-        
-          <p class="article-more-link">
-            <a href="/2015/02/26/D02相关服务搭建/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/02/26/D02相关服务搭建/" data-id="n69c0v5ifvqsdfxo" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
+  
+    <a href="/2015/03/20/Installation of Chrome/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
   
 </article>
 
-
-  
-    <article id="post-cpio_filesystem" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/02/16/cpio_filesystem/" class="article-date">
-  <time datetime="2015-02-16T08:06:26.000Z" itemprop="datePublished">Feb 16 2015</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="How_To_Add_Services_Into_cpio_Filesystem_To_Make_Cpu_and_Memory_High_Load">How To Add Services Into cpio Filesystem To Make Cpu and Memory High Load</h2>
-<p>Sometimes some performances of D02 board should be tested under high cpu and memory load, so we can add some stress services into filesystem to realize the requirements. In my case, we already have cpio filesystem hulk-hip05.cpio.gz and stress service will be added into cpio filesystem as following steps.<br>
-        
-          <p class="article-more-link">
-            <a href="/2015/02/16/cpio_filesystem/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/02/16/cpio_filesystem/" data-id="tbxap7tm5x69lw22" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-  
 </section>
         
           <aside id="sidebar">
