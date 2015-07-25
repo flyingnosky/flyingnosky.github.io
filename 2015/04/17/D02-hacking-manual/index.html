@@ -293,7 +293,7 @@ http<span class="variable">s:</span>//github.<span class="keyword">com</span>/hi
 <p>FTP protocol is used for downloading between D02 and local network.So before this step, please make sure you have a working FTP server in local network. D02 could get files from network using FTP.</p>
 <ol>
 <li><p>Check the hardware of D02 board</p>
-<p> You should check the type of dimm and disk on D02 board. For disks, it should satisfy the specification of <strong>SATA3</strong>.For dimms, it should satisfy the specification of xxxx and xxxx.</p>
+<p> You should check the type of dimm and disk on D02 board. For disks, it should satisfy the specification of <strong>SATA3</strong>.For dimms, it should satisfy the specification of <strong>UDIMM 2Rank 8Gbytes</strong> and <strong>RDIMM 2Rank 8Gbytes</strong>.</p>
 </li>
 <li><p>Prepare files about UEFI on local computer</p>
 <p> There are three files which should be prepared before hacking UEFI:D02.fd for BIOS, bl1.bin and fip.bin for Trust Fireware.Then put them on the root directory of FTP.</p>
@@ -392,7 +392,7 @@ eg. ifconfig -s eth0 <span class="number">192.168.10.102</span> <span class="num
 <pre><code><span class="tag">provision</span> <span class="attr_selector">[server.IP]</span> <span class="tag">-u</span> <span class="attr_selector">[user.name]</span> <span class="tag">-p</span> <span class="attr_selector">[passwd]</span> <span class="tag">-f</span> <span class="attr_selector">[image.file]</span> <span class="tag">-a</span> <span class="attr_selector">[address]</span>
 <span class="tag">norwfmem</span> <span class="attr_selector">[source address]</span> <span class="attr_selector">[offset]</span> <span class="attr_selector">[data length]</span>
 <span class="tag">eg</span>. <span class="tag">provision</span> 192<span class="class">.168</span><span class="class">.10</span><span class="class">.102</span> <span class="tag">-u</span> <span class="tag">sch</span> <span class="tag">-p</span> <span class="tag">aaa</span> <span class="tag">-f</span> <span class="tag">Image</span> <span class="tag">-a</span> 100000
-    <span class="tag">norwfmem</span> 100000 100000 2000000
+    <span class="tag">norwfmem</span> 100000 100000 1<span class="tag">f00000</span>
 </code></pre><p>3.Download dtb file from FTP</p>
 <pre><code><span class="tag">provision</span> <span class="attr_selector">[server.IP]</span> <span class="tag">-u</span> <span class="attr_selector">[user.name]</span> <span class="tag">-p</span> <span class="attr_selector">[passwd]</span> <span class="tag">-f</span> <span class="attr_selector">[dtb.file]</span> <span class="tag">-a</span> <span class="attr_selector">[address]</span>
 <span class="tag">spiwfmem</span> <span class="attr_selector">[source address]</span> <span class="attr_selector">[offset]</span> <span class="attr_selector">[data length]</span>
@@ -476,8 +476,8 @@ devicetree /hip05-d02_3<span class="number">.16</span>.dtb
 | sda5    |rest space |    ext4      | linux swap       |
 <span class="code">+---------+</span>-----------<span class="code">+--------------+</span>------------------+ 
 **<span class="strong">*Note:EFI system should have a fat filesystem, so we should format sda1 with "mkfs.vfat /dev/sda1".*</span>*<span class="strong">*</span>
-</code></pre><h3 id="How_to_process_with_the_disk_when_the_disk_is_seagate_but_not_made_by_samsung">How to process with the disk when the disk is seagate but not made by samsung</h3>
-<p>a.Find a pc or another board which can identify this disk<br>You should find a pc or another board which can identify this disk, and the system of pc or board should be linux system. For us,we can use D01 board.</p>
+</code></pre><h3 id="How_to_process_with_the_disk_when_the_disk_is_not_identified_by_D02_board">How to process with the disk when the disk is not identified by D02 board</h3>
+<p>when the disk is not identified by D02, you can try the following step to process the disk.(for some specfic disk eg seagate disk made by samsung, it can be useful)<br>a.Find a pc or another board which can identify this disk<br>You should find a pc or another board which can identify this disk, and the system of pc or board should be linux system. For us,we can use D01 board.</p>
 <p>b.Use tool fdisk to process this disk</p>
 <pre><code><span class="built_in">format</span> <span class="operator">the</span> disk firstly: 
                     mkfs.ext4 /dev/sda
